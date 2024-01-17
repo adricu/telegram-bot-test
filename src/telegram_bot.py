@@ -3,8 +3,10 @@ https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/
 """
 
 import csv
+import datetime
 import logging
 import os
+from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
 from telegram import ForceReply, Update
@@ -17,6 +19,8 @@ LOGGER = logging.getLogger(__name__)
 FILE_PATH = os.environ["FILE_PATH"]
 BOT_NAME = os.environ["BOT_NAME"]
 TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
+
+MADRID_TIMEZONE = ZoneInfo("Europe/Madrid")
 
 
 def config_logging() -> None:
@@ -64,7 +68,8 @@ async def to_excel(update: Update, _: ContextTypes.DEFAULT_TYPE) -> None:
         writer = csv.writer(csvfile, dialect="excel", delimiter="|")
 
         # Write a message to the CSV file
-        writer.writerow([username, message])
+        now = datetime.datetime.now()
+        writer.writerow([now.astimezone(MADRID_TIMEZONE), username, message])
 
 
 def main() -> None:
