@@ -1,5 +1,5 @@
 # [START docker]
-FROM python:3.9-slim
+FROM python:3.13.0a4-slim
 
 # Make stdout/stderr unbuffered. This prevents delay between output and cloud logging collection.
 ENV PYTHONUNBUFFERED 1
